@@ -10,10 +10,10 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "debug": "npx nodemon --inspect-brk ./src/app.ts",
+    "debug": "npx nodemon ./src/app.ts --inspect-brk",
     "lint": "npx eslint ./src",
     "serve": "npx nodemon ./src/app.ts",
-    "start": "npx node ./dist/app.js"
+    "start": "node ./dist/app.js"
   },
   "dependencies": {
     "canvas": "^2.9.1",
