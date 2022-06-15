@@ -25,7 +25,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: devleo/emote-generator:latest
+          tags: devleo/emote-api:latest
       -
         name: Image Digest
         run: echo ${{ steps.docker_build.outputs.digest }}
