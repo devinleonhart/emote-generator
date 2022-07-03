@@ -19,7 +19,7 @@
     ],
     "rules": {
         "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/ts-expect-error": "allow-with-description",
+        "@typescript-eslint/ban-ts-comment": "off",
         "indent": [
             "error",
             2
