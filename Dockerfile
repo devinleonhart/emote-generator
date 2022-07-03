@@ -5,7 +5,7 @@ ENV ASSET_PATH /assets
 ENV TEMP_PATH /tmp
 
 RUN apk add --no-cache  \
-    python \
+    python3 \
     g++ \
     build-base \
     cairo-dev \
