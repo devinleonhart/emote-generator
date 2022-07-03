@@ -18,6 +18,8 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ts-expect-error": "allow-with-description",
         "indent": [
             "error",
             2
@@ -26,6 +28,7 @@
             "error",
             "unix"
         ],
+        "no-undef": "off",
         "quotes": [
             "error",
             "double"

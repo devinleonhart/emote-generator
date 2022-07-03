@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import Layout from './components/Layout.vue'
+import EmoteLayout from "./components/EmoteLayout.vue";
 </script>
 
 <template>
-  <Layout />
+  <EmoteLayout />
 </template>
 
 <style>

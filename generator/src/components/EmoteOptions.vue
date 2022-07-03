@@ -11,7 +11,10 @@
             value=""
             selected
           />
-          <option v-for="character in characters">
+          <option
+            v-for="(character, index) in characters"
+            :key="index"
+          >
             {{ character }}
           </option>
         </select>
@@ -30,7 +33,10 @@
             value=""
             selected
           />
-          <option v-for="blueprint in blueprints">
+          <option
+            v-for="(blueprint, index) in blueprints"
+            :key="index"
+          >
             {{ blueprint }}
           </option>
         </select>
@@ -62,16 +68,18 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from "vue";
+import { reactive, toRefs } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "../stores/emoteStore";
 import PartPicker from "./PartPicker.vue";
 
-const { blueprints, characters } = defineProps<{
+const props = defineProps<{
     blueprints: string[],
     characters: string[],
     parts: Parts,
   }>();
+
+const { blueprints, characters} = toRefs(props);
 
 const state = reactive({
   sCharacter: "",
