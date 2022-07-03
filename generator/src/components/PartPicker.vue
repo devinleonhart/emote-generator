@@ -2,8 +2,16 @@
   <form>
     <div class="control">
       <span>{{ partName }}</span>
-      <label class="radio" v-for="part in partSelection">
-        <input type="radio" :name="partName" @change="onChange" :value="part">
+      <label
+        v-for="part in partSelection"
+        class="radio"
+      >
+        <input
+          type="radio"
+          :name="partName"
+          :value="part"
+          @change="onChange"
+        >
         {{ part }}
       </label>
     </div>
@@ -11,18 +19,18 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from '../stores/emoteStore';
+import { useStore } from "../stores/emoteStore";
 
-  const { partName, partSelection } = defineProps<{
+const { partName, partSelection } = defineProps<{
     partName: string,
     partSelection: string[]
-  }>()
+  }>();
 
-  const store = useStore()
+const store = useStore();
 
-  function onChange(event:any) {
-    store.selectPart(partName, event.target.value)
-  }
+function onChange(event:any) {
+  store.selectPart(partName, event.target.value);
+}
 </script>
 
 <style lang="scss" scoped>

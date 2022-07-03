@@ -1,3 +1,3 @@
-# emote-api
+# emote-generator
 
-Serve emotes with ease.
+Build emotes with ease.

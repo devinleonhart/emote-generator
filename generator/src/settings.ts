@@ -3,7 +3,7 @@ interface emoteSettings {
     baseURL: string
     headers: {
       Accept: string,
-      'Content-Type': string
+      "Content-Type": string
     }
   }
 
@@ -11,12 +11,12 @@ interface emoteSettings {
 
 const emoteSettings:emoteSettings = {
   apiOptions: {
-    baseURL: 'http://localhost:3000/api/',
+    baseURL: "http://localhost:3000/api/",
     headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
+      Accept: "application/json",
+      "Content-Type": "application/json",
     },
   },
-}
+};
 
-export default emoteSettings
+export default emoteSettings;
