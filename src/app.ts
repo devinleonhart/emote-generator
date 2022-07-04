@@ -14,7 +14,8 @@ app.use(rateLimit(rateLimitOptions));
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
-      "default-src": ["'self'", "devleo.org", "*.devleo.org"]
+      "default-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "script-src-attr": null
     }
   }
 }));
