@@ -18,7 +18,7 @@ export const useStore = defineStore("main", {
     buildEmoteURLWithBlueprint() {
       try {
         const searchParams = new URLSearchParams({character: this.selectedCharacter, ...{key: this.selectedBlueprint}});
-        this.$state.emoteURL = `${settings.apiOptions.baseURL}emote?${searchParams.toString()}`;
+        this.$state.emoteURL = `${settings.apiOptions.baseURL}/emote?${searchParams.toString()}`;
       } catch (error) {
         console.error(error);
       }
@@ -26,7 +26,7 @@ export const useStore = defineStore("main", {
     buildEmoteURLWithParts() {
       try {
         const searchParams = new URLSearchParams({character: this.selectedCharacter, ...this.$state.selectedParts});
-        this.$state.emoteURL = `${settings.apiOptions.baseURL}emote?${searchParams.toString()}`;
+        this.$state.emoteURL = `${settings.apiOptions.baseURL}/emote?${searchParams.toString()}`;
       } catch (error) {
         console.error(error);
       }
