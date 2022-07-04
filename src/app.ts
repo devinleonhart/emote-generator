@@ -11,7 +11,13 @@ if (process.env.NODE_ENV !== "production") {
   app.use(cors());
 }
 app.use(rateLimit(rateLimitOptions));
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      "default-src": ["self", "devleo.org", "*.devleo.org"]
+    }
+  }
+}));
 app.use(express.json(payloadLimit));
 app.use(express.static(cachePath));
 app.use(express.static("public"));
