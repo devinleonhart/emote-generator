@@ -14,8 +14,9 @@
           <option
             v-for="(character, index) in characters"
             :key="index"
+            :value="character"
           >
-            {{ character }}
+            {{ capitalize(character) }}
           </option>
         </select>
       </div>
@@ -36,8 +37,9 @@
           <option
             v-for="(blueprint, index) in blueprints"
             :key="index"
+            :value="blueprint"
           >
-            {{ blueprint }}
+            {{ removeName(blueprint) }}
           </option>
         </select>
       </div>
@@ -71,6 +73,7 @@
 import { reactive, toRefs } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "../stores/emoteStore";
+import { capitalize, removeName } from "../util";
 import PartPicker from "./PartPicker.vue";
 
 const props = defineProps<{
