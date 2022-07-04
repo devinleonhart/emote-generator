@@ -11,8 +11,8 @@
   "scripts": {
     "build": "npx tsc",
     "debug": "npx nodemon ./src/app.ts --inspect-brk",
+    "dev": "npx nodemon ./src/app.ts",
     "lint": "npx eslint ./src",
-    "serve": "npx nodemon ./src/app.ts",
     "start": "node ./dist/app.js"
   },
   "dependencies": {
