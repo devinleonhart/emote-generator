@@ -3,7 +3,8 @@
     <div class="control">
       <span>{{ partName }}</span>
       <label
-        v-for="part in partSelection"
+        v-for="(part, index) in partSelection"
+        :key="index"
         class="radio"
       >
         <input
@@ -19,17 +20,20 @@
 </template>
 
 <script lang="ts" setup>
+import { toRefs } from "vue";
 import { useStore } from "../stores/emoteStore";
 
-const { partName, partSelection } = defineProps<{
+const props = defineProps<{
     partName: string,
     partSelection: string[]
   }>();
 
+const { partName, partSelection } = toRefs(props);
+
 const store = useStore();
 
 function onChange(event:any) {
-  store.selectPart(partName, event.target.value);
+  store.selectPart(partName.value, event.target.value);
 }
 </script>
 

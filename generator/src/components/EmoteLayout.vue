@@ -30,19 +30,6 @@ const { blueprints, characters, parts } = storeToRefs(store);
 // Initial population of blueprints.
 store.fetchBlueprints();
 
-// If all the parts are selected, we can build an emote.
-store.$subscribe((mutation, state) => {
-  // @ts-ignore - mutation.events changes during development.
-  if(["head", "eyes", "eyebrows", "mouth"].includes(mutation.events.key)) {
-    if(state.selectedParts.head &&
-         state.selectedParts.eyebrows &&
-         state.selectedParts.eyes &&
-         state.selectedParts.mouth) {
-      store.buildEmoteURLWithParts();
-    }
-  }
-});
-
 </script>
 
 <style lang="scss">

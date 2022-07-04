@@ -73,6 +73,13 @@ export const useStore = defineStore("main", {
     },
     selectPart(partName: string, part: string) {
       this.$state.selectedParts[partName as PartsKey] = part;
+      // If all of the emote parts are selected, build the emote.
+      if(this.$state.selectedParts.head &&
+        this.$state.selectedParts.eyebrows &&
+        this.$state.selectedParts.eyes &&
+        this.$state.selectedParts.mouth) {
+        this.buildEmoteURLWithParts();
+      }
     }
   }
 });
