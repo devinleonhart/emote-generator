@@ -16,4 +16,16 @@ export const rateLimitOptions = {
   message: "Too many requests."
 };
 
+export const helmetOptions = {
+  contentSecurityPolicy: {
+    directives: {
+      "default-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "img-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "script-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "style-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "script-src-attr": null
+    }
+  }
+};
+
 export const payloadLimit = { limit: "10kb" };
