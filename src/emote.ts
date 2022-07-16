@@ -12,8 +12,6 @@ export const buildEmote = async(key:string, blueprint:Blueprint):Promise<string>
   try {
     const partData = await readEmoteParts(blueprint);
 
-
-
     let head: string | Buffer = "";
     let eyebrows: string | Buffer = "";
     let eyes: string | Buffer = "";
