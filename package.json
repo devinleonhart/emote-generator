@@ -10,7 +10,6 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "debug": "npx nodemon ./src/app.ts --inspect-brk",
     "dev": "npx nodemon ./src/app.ts",
     "lint": "npx eslint ./src",
     "start": "node ./dist/app.js"
