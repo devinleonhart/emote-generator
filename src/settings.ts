@@ -16,4 +16,19 @@ export const rateLimitOptions = {
   message: "Too many requests."
 };
 
+export const helmetOptions = {
+  contentSecurityPolicy: {
+    directives: {
+      "default-src": ["'self'"],
+      "img-src": ["'self'", "kemono.cafe", "*.kemono.cafe", "devleo.org", "*.devleo.org"],
+      "script-src": ["'self'"],
+      "style-src": ["'self'"],
+      "script-src-attr": null
+    }
+  },
+  crossOriginResourcePolicy: {
+    policy: "cross-origin"
+  }
+};
+
 export const payloadLimit = { limit: "10kb" };
