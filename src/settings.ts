@@ -20,7 +20,7 @@ export const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
       "default-src": ["'self'"],
-      "img-src": null,
+      "img-src": ["'self'", "'kemono.cafe'", "'*.kemono.org'", "'devleo.org'", "'*.devleo.org'"],
       "script-src": ["'self'"],
       "style-src": ["'self'"],
       "script-src-attr": null
