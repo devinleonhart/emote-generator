@@ -42,8 +42,7 @@ function onChange(event:any) {
     margin: 1em 0;
 
     label {
-      text-transform: capitalize;
-      margin-right: .5em;
+      margin: 0 .5em 0 0 !important;
     }
   }
   h1 {
