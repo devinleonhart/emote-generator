@@ -42,7 +42,8 @@ function onChange(event:any) {
     margin: 1em 0;
 
     label {
-      margin: 0 .5em 0 0 !important;
+      margin: 0 1em .5em 0 !important;
+      text-transform: uppercase;
     }
   }
   h1 {
