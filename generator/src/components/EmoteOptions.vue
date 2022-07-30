@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "../stores/emoteStore";
 import { capitalize, removeName } from "../util";
@@ -84,6 +84,13 @@ const state = reactive({
 const store = useStore();
 
 const { selectedCharacter } = storeToRefs(store);
+
+watch(blueprints, async (newBlueprints) => {
+  if (state.sCharacter !== "" && newBlueprints.length > 0) {
+    state.sBlueprint = newBlueprints[0];
+    store.selectBlueprint(state.sBlueprint);
+  }
+});
 
 function onBlueprintChange(event:any) {
   if(event.target.value && event.target.value != "") {

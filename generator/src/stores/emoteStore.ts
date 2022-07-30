@@ -44,7 +44,6 @@ export const useStore = defineStore("main", {
       try {
         const { data } = await axios.get(`/blueprint/${character}`);
         this.$state.blueprints = data;
-        this.selectBlueprint(data[0]);
       } catch (error) {
         console.error(error);
       }
