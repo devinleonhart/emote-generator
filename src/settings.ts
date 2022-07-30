@@ -21,7 +21,7 @@ export const helmetOptions = {
     directives: {
       "default-src": ["'self'"],
       "img-src": ["'self'"],
-      "script-src": ["'unsafe-eval'"],
+      "script-src": null,
       "style-src": ["'self'"],
       "script-src-attr": null
     }
