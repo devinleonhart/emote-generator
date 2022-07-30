@@ -17,15 +17,7 @@ export const rateLimitOptions = {
 };
 
 export const helmetOptions = {
-  contentSecurityPolicy: {
-    directives: {
-      "default-src": ["'self'"],
-      "img-src": ["'self'", "kemono.cafe", "*.kemono.cafe", "devleo.org", "*.devleo.org"],
-      "script-src": ["'self'"],
-      "style-src": ["'self'"],
-      "script-src-attr": null
-    }
-  }
+  contentSecurityPolicy: false,
 };
 
 export const payloadLimit = { limit: "10kb" };
