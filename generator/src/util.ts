@@ -12,7 +12,7 @@ export function capitalize (input:string):string {
 export function removeName (input:string):string {
   let nameRemoved = "";
   if(input.length > 0 && input.indexOf("_") > -1) {
-    nameRemoved = input.split("_")[1];
+    nameRemoved = input.split("_").slice(1).join(" ");
   }
-  return capitalize(nameRemoved);
+  return nameRemoved.toUpperCase();
 }
