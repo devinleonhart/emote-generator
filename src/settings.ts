@@ -16,8 +16,4 @@ export const rateLimitOptions = {
   message: "Too many requests."
 };
 
-export const helmetOptions = {
-  contentSecurityPolicy: false,
-};
-
 export const payloadLimit = { limit: "10kb" };
