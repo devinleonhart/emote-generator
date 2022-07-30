@@ -8,10 +8,6 @@
           @change="onCharacterChange"
         >
           <option
-            value=""
-            selected
-          />
-          <option
             v-for="(character, index) in characters"
             :key="index"
             :value="character"
@@ -30,10 +26,6 @@
           :disabled="!selectedCharacter"
           @change="onBlueprintChange"
         >
-          <option
-            value=""
-            selected
-          />
           <option
             v-for="(blueprint, index) in blueprints"
             :key="index"
