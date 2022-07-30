@@ -20,7 +20,7 @@ export const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
       "default-src": ["'self'"],
-      "img-src": ["*"],
+      "img-src": null,
       "script-src": ["'self'"],
       "style-src": ["'self'"],
       "script-src-attr": null
