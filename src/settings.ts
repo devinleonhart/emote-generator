@@ -19,10 +19,10 @@ export const rateLimitOptions = {
 export const helmetOptions = {
   contentSecurityPolicy: {
     directives: {
-      "default-src": ["'self'", "devleo.org", "*.devleo.org"],
-      "img-src": ["'self'", "devleo.org", "*.devleo.org"],
-      "script-src": ["'self'", "devleo.org", "*.devleo.org"],
-      "style-src": ["'self'", "devleo.org", "*.devleo.org"],
+      "default-src": ["'self'"],
+      "img-src": ["*"],
+      "script-src": ["'self'"],
+      "style-src": ["'self'"],
       "script-src-attr": null
     }
   }
