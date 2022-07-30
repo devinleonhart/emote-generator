@@ -1,7 +1,7 @@
 <template>
   <form>
     <div class="control">
-      <span>{{ partName }}</span>
+      <h1>{{ partName }}</h1>
       <label
         v-for="(part, index) in partSelection"
         :key="index"
@@ -46,11 +46,13 @@ function onChange(event:any) {
       margin-right: .5em;
     }
   }
-  span {
+  h1 {
+    border-bottom: 1px solid #f5f5f5;
     display: block;
-    font-size: large;
+    font-size: 20px;
     &::first-letter {
       text-transform: capitalize;
     }
+    margin-bottom: .5em;
   }
 </style>
