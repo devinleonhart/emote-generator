@@ -1,8 +1,8 @@
-interface BlueprintCollection {
+export interface BlueprintCollection {
   [key: string]: Blueprint
 }
 
-interface Blueprint {
+export interface Blueprint {
   character: string;
   head: string;
   eyes: string;
@@ -10,7 +10,7 @@ interface Blueprint {
   mouth: string;
 }
 
-interface Part {
+export interface Part {
   key: string;
   name: string;
   src: Buffer;

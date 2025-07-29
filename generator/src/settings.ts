@@ -17,6 +17,6 @@ const emoteSettings:emoteSettings = {
       "Content-Type": "application/json",
     },
   },
-};
+}
 
-export default emoteSettings;
+export default emoteSettings

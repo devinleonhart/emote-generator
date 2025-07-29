@@ -20,39 +20,22 @@
 </template>
 
 <script lang="ts" setup>
-import { toRefs } from "vue";
-import { useStore } from "../stores/emoteStore";
+import { toRefs } from "vue"
+import { useStore } from "../stores/emoteStore"
 
 const props = defineProps<{
     partName: string,
     partSelection: string[]
-  }>();
+  }>()
 
-const { partName, partSelection } = toRefs(props);
+const { partName, partSelection } = toRefs(props)
 
-const store = useStore();
+const store = useStore()
 
 function onChange(event:any) {
-  store.selectPart(partName.value, event.target.value);
+  store.selectPart(partName.value, event.target.value)
 }
 </script>
 
-<style lang="scss" scoped>
-  form {
-    margin: 1em 0;
-
-    label {
-      margin: 0 1em .5em 0 !important;
-      text-transform: uppercase;
-    }
-  }
-  h1 {
-    border-bottom: 1px solid #f5f5f5;
-    display: block;
-    font-size: 20px;
-    &::first-letter {
-      text-transform: capitalize;
-    }
-    margin-bottom: .5em;
-  }
+<style>
 </style>

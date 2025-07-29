@@ -62,67 +62,64 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs, watch } from "vue";
-import { storeToRefs } from "pinia";
-import { useStore } from "../stores/emoteStore";
-import { capitalize, removeName } from "../util";
-import PartPicker from "./PartPicker.vue";
+import { reactive, toRefs, watch } from "vue"
+import { storeToRefs } from "pinia"
+import { useStore } from "../stores/emoteStore"
+import { capitalize, removeName } from "../util"
+import PartPicker from "./PartPicker.vue"
+
+import type { Parts } from "../../types/main"
 
 const props = defineProps<{
     blueprints: string[],
     characters: string[],
     parts: Parts,
-  }>();
+  }>()
 
-const { blueprints, characters} = toRefs(props);
+const { blueprints, characters} = toRefs(props)
 
 const state = reactive({
   sCharacter: "",
   sBlueprint: "",
-});
+})
 
-const store = useStore();
+const store = useStore()
 
-const { selectedCharacter } = storeToRefs(store);
+const { selectedCharacter } = storeToRefs(store)
 
 watch(blueprints, async (newBlueprints) => {
   if (state.sCharacter !== "" && newBlueprints.length > 0) {
-    state.sBlueprint = newBlueprints[0];
-    store.selectBlueprint(state.sBlueprint);
+    state.sBlueprint = newBlueprints[0]
+    store.selectBlueprint(state.sBlueprint)
   }
-});
+})
 
 function onBlueprintChange(event:any) {
   if(event.target.value && event.target.value != "") {
-    store.resetParts();
-    resetRadioButtons();
-    store.selectBlueprint(event.target.value);
+    store.resetParts()
+    resetRadioButtons()
+    store.selectBlueprint(event.target.value)
   }
 }
 
 function onCharacterChange(event:any) {
   if(event.target.value && event.target.value != "") {
-    store.selectCharacter(event.target.value);
-    store.resetEmoteURL();
-    store.resetParts();
-    resetRadioButtons();
-    state.sBlueprint="";
+    store.selectCharacter(event.target.value)
+    store.resetEmoteURL()
+    store.resetParts()
+    resetRadioButtons()
+    state.sBlueprint=""
   }
 }
 
 function resetRadioButtons() {
-  const radios = document.querySelectorAll<HTMLInputElement>("input[type=\"radio\"]:checked");
+  const radios = document.querySelectorAll<HTMLInputElement>("input[type=\"radio\"]:checked")
   radios.forEach((radio) => {
-    radio.checked = false;
-  });
+    radio.checked = false
+  })
 }
 
 </script>
 
-<style lang="scss" scoped>
-  #emote-options {
-    .select {
-      width: 100%
-    }
-  }
+<style>
 </style>

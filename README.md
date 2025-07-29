@@ -2,46 +2,22 @@
 
 Build emotes with ease.
 
-## UI
-
-### Build
-
-Outputs to `./generator/dist`
+## Development with Docker
 
 ```bash
-npm run build
+cd /source/emote-generator
+docker docker build -t emote .
+docker run -p 4000:4000 emote
+
+Then visit:
+http://localhost:4000/
 ```
 
-### Develop
-
-Serves with Vite on http://localhost:3000
+## Development with Docker (Live Reload)
 
 ```bash
-npm run dev
-```
+cd /source/emote-generator
+docker compose -f docker-compose.dev.yml up
 
-## API
-
-### Build
-
-Outputs to `./dist`
-Serves with Express on http://localhost:4000
-
-```bash
-npm run build
-npm run start
-```
-
-### Develop
-
-Serves with Express on http://localhost:4000
-
-```bash
-npm run dev
-```
-
-### Lint
-
-```bash
-npm run lint
-```
+# Then visit:
+http://localhost:4000/

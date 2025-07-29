@@ -1,22 +1,22 @@
-import express from "express";
-import cors from "cors";
-import rateLimit from "express-rate-limit";
-import helmet from "helmet";
-import { cachePath, helmetOptions, payloadLimit, port, rateLimitOptions } from "./settings";
-import { routes } from "./routes";
+import express from "express"
+import cors from "cors"
+import rateLimit from "express-rate-limit"
+import helmet from "helmet"
+import { cachePath, helmetOptions, payloadLimit, port, rateLimitOptions } from "./settings.js"
+import { routes } from "./routes.js"
 
-const app = express();
+const app = express()
 
 if (process.env.NODE_ENV !== "production") {
-  app.use(cors());
+  app.use(cors())
 }
-app.use(rateLimit(rateLimitOptions));
-app.use(helmet(helmetOptions));
-app.use(express.json(payloadLimit));
-app.use(express.static(cachePath));
-app.use(express.static("public"));
+app.use(rateLimit(rateLimitOptions))
+app.use(helmet(helmetOptions))
+app.use(express.json(payloadLimit))
+app.use(express.static(cachePath))
+app.use(express.static("public"))
 
-routes(app);
+routes(app)
 
-console.log(`Listening on ${port}!`);
-app.listen(port);
+console.log(`Listening on ${port}!`)
+app.listen(port)

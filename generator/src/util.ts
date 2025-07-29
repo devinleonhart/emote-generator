@@ -1,18 +1,18 @@
 export function capitalize (input:string):string {
-  let capitalized = "";
+  let capitalized = ""
   if(input.length > 1) {
-    capitalized = input[0].toUpperCase() + input.slice(1);
+    capitalized = input[0].toUpperCase() + input.slice(1)
   }
   else if (input.length === 1) {
-    capitalized = input[0].toUpperCase();
+    capitalized = input[0].toUpperCase()
   }
-  return capitalized;
+  return capitalized
 }
 
 export function removeName (input:string):string {
-  let nameRemoved = "";
+  let nameRemoved = ""
   if(input.length > 0 && input.indexOf("_") > -1) {
-    nameRemoved = input.split("_").slice(1).join(" ");
+    nameRemoved = input.split("_").slice(1).join(" ")
   }
-  return nameRemoved.toUpperCase();
+  return nameRemoved.toUpperCase()
 }

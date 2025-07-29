@@ -1,0 +1,14 @@
+services:
+  emote-api:
+    build:
+      context: .
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./src:/app/src
+      - ./assets:/assets
+      - ./generator:/tmp/generator
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+    working_dir: /app
+    command: npx nodemon --watch src --ext ts --exec "node --loader ts-node/esm ./src/app.ts"

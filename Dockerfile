@@ -1,41 +1,43 @@
-FROM node:16.13-alpine
+FROM node:24.4-slim
 
-ENV APP_PATH /app
-ENV ASSET_PATH /assets
-ENV TEMP_PATH /tmp
+ENV APP_PATH=/app
+ENV ASSET_PATH=/assets
+ENV TEMP_PATH=/tmp
 
-RUN apk add --no-cache  \
+# Install required build dependencies
+RUN apt-get update && apt-get install -y \
     python3 \
     g++ \
-    build-base \
-    cairo-dev \
-    jpeg-dev \
-    pango-dev \
-    musl-dev \
-    giflib-dev \
-    pixman-dev \
-    pangomm-dev \
-    libjpeg-turbo-dev \
-    freetype-dev
+    build-essential \
+    libcairo2-dev \
+    libjpeg-dev \
+    libpango1.0-dev \
+    libgif-dev \
+    libpixman-1-dev \
+    libpangomm-1.4-dev \
+    libjpeg-turbo-progs \
+    libfreetype6-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Create starting directories.
-RUN mkdir $APP_PATH
-RUN mkdir $ASSET_PATH
-RUN mkdir $APP_PATH/public
+# Create required directories
+RUN mkdir -p $APP_PATH/public $ASSET_PATH
+
+# Copy full project to temp directory
 COPY . $TEMP_PATH
 
-# Switch to the Express App and build it.
+# Build backend
 WORKDIR $TEMP_PATH
-RUN npm i && npm run build
-RUN cp -r ./node_modules /
-RUN cp -r ./dist/* $APP_PATH
+RUN npm ci && npm run build
+RUN cp -r ./dist/* ./package.json ./node_modules $APP_PATH
 
-# Switch to the Vue App and build it.
-# The destination is the Express App's public folder.
+# Build frontend (Vue app in ./generator)
 WORKDIR $TEMP_PATH/generator
-RUN npm i && npm run build
+RUN npm ci && npm run build
 RUN cp -r ./dist/* $APP_PATH/public
 
-WORKDIR $APP_PATH
+# Copy runtime assets (after build step)
+COPY ./assets $ASSET_PATH
 
+# Final app location
+WORKDIR $APP_PATH
 CMD ["node", "./app.js"]

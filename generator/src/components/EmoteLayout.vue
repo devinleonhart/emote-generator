@@ -19,41 +19,19 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from "pinia";
-import { useStore } from "../stores/emoteStore";
-import EmoteOptions from "./EmoteOptions.vue";
-import EmotePreview from "./EmotePreview.vue";
+import { storeToRefs } from "pinia"
+import { useStore } from "../stores/emoteStore"
+import EmoteOptions from "./EmoteOptions.vue"
+import EmotePreview from "./EmotePreview.vue"
 
-const store = useStore();
-const { blueprints, characters, parts } = storeToRefs(store);
+const store = useStore()
+const { blueprints, characters, parts } = storeToRefs(store)
 
 // Initial population of blueprints.
-store.fetchBlueprints();
+store.fetchBlueprints()
 
 </script>
 
-<style lang="scss">
-  #emote-generator {
-    color: #DDD;
+<style>
 
-    label {
-      text-align: left;
-    }
-
-    select {
-      width: 100%
-    }
-
-    section {
-      padding: 2em;
-    }
-
-    // Bulma Override
-    label {
-      color: #DDD !important;
-      &.radio:hover {
-        color: #FFF !important;
-      }
-    }
-  }
 </style>

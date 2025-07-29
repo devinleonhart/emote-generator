@@ -17,29 +17,16 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from "pinia";
-import { useStore } from "../stores/emoteStore";
+import { storeToRefs } from "pinia"
+import { useStore } from "../stores/emoteStore"
 
-const store = useStore();
-const { emoteURL } = storeToRefs(store);
+const store = useStore()
+const { emoteURL } = storeToRefs(store)
 
 function copyToClipboard() {
-  navigator.clipboard.writeText(emoteURL.value);
+  navigator.clipboard.writeText(emoteURL.value)
 }
 </script>
 
-<style lang="scss" scoped>
-  #emote-preview {
-    text-align: center;
-
-    figure {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 400px;
-      border: 1px solid #EEE;
-      border-radius: 5px;
-      margin-bottom: 2em;
-    }
-  }
+<style>
 </style>
