@@ -70,11 +70,8 @@ RUN npm rebuild canvas
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Copy assets directory
-COPY assets/ ./assets/
-
-# Create cache directory
-RUN mkdir -p assets/emotes/cache
+# Create assets directory structure (for CI where assets might not exist)
+RUN mkdir -p assets/blueprints assets/emotes/cache
 
 # Expose port
 EXPOSE 4000
