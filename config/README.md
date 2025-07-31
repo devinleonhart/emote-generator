@@ -58,15 +58,13 @@ Both projects now support convenient path aliases for cleaner imports:
 
 **Before (relative imports):**
 ```typescript
-import type { Blueprint } from "./types/main"
-import { blueprintPath } from "./settings"
+import type { EmoteConfig } from "./types/main"
 import { someUtil } from "./util"
 ```
 
 **After (path aliases):**
 ```typescript
-import type { Blueprint } from "@types/main"
-import { blueprintPath } from "@/settings"
+import type { EmoteConfig } from "@types/main"
 import { someUtil } from "@/util"
 ```
 

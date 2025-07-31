@@ -7,24 +7,15 @@ import type { Parts, PartsKey, SelectedParts } from "../../types/main"
 export const useStore = defineStore("main", {
   state: () => {
     return {
-      blueprints: [] as string[],
       characters: [] as string[],
       emoteURL: "",
       parts: {} as Parts,
-      selectedBlueprint: "",
       selectedCharacter: "",
       selectedParts: {} as SelectedParts
     }
   },
   actions: {
-    buildEmoteURLWithBlueprint() {
-      try {
-        const searchParams = new URLSearchParams({character: this.selectedCharacter, ...{key: this.selectedBlueprint}})
-        this.$state.emoteURL = `${settings.apiOptions.baseURL}/emote?${searchParams.toString()}`
-      } catch (error) {
-        console.error(error)
-      }
-    },
+
     buildEmoteURLWithParts() {
       try {
         const searchParams = new URLSearchParams({character: this.selectedCharacter, ...this.$state.selectedParts})
@@ -33,22 +24,13 @@ export const useStore = defineStore("main", {
         console.error(error)
       }
     },
-    async fetchBlueprints() {
+    async fetchCharacters() {
       try {
-        const { data } = await axios.get("/blueprint")
-        this.$state.blueprints = data
-        this.$state.characters = getCharactersFromBluePrints(data)
+        const { data } = await axios.get("/character")
+        this.$state.characters = data
 
-        // Auto-select a random character and parts after fetching blueprints
+        // Auto-select a random character and parts after fetching characters
         await this.selectRandomCharacterAndParts()
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    async fetchBlueprintsForCharacter(character: string) {
-      try {
-        const { data } = await axios.get(`/blueprint/${character}`)
-        this.$state.blueprints = data
       } catch (error) {
         console.error(error)
       }
@@ -61,8 +43,7 @@ export const useStore = defineStore("main", {
         // Only auto-select random parts if this is the initial load (not a manual character selection)
         // and if we're still on the same character that was randomly selected
         if (this.$state.selectedCharacter === character &&
-            Object.keys(this.$state.selectedParts).length === 0 &&
-            this.$state.blueprints.length > 0) {
+            Object.keys(this.$state.selectedParts).length === 0) {
           // Small delay to ensure components are mounted
           setTimeout(() => {
             this.selectRandomParts()
@@ -78,16 +59,10 @@ export const useStore = defineStore("main", {
     resetParts() {
       this.$state.selectedParts = {} as SelectedParts
     },
-    selectBlueprint(blueprint: string) {
-      this.$state.selectedBlueprint = blueprint
-      this.buildEmoteURLWithBlueprint()
-    },
     selectCharacter(character: string) {
       this.$state.selectedCharacter = character
-      this.$state.selectedBlueprint = ""
       this.$state.selectedParts = {} as SelectedParts
       this.$state.emoteURL = ""
-      this.fetchBlueprintsForCharacter(character)
       this.fetchPartsForCharacter(character)
     },
     selectPart(partName: string, part: string) {
@@ -121,16 +96,7 @@ export const useStore = defineStore("main", {
   }
 })
 
-function getCharactersFromBluePrints(blueprints: string[]):string[] {
-  const currentCharacters:string[] = []
-  blueprints.forEach((blueprint) => {
-    const character = blueprint.split("_")[0]
-    if(!currentCharacters.includes(character)) {
-      currentCharacters.push(character)
-    }
-  })
-  return currentCharacters
-}
+
 
 function sortParts(parts: string[]):Parts {
   const currentParts:Parts = { head: [], eyebrows: [], eyes: [], mouth: [] }

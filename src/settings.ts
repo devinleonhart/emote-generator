@@ -7,7 +7,6 @@ const __dirname = path.dirname(__filename)
 
 import type { HelmetOptions } from "helmet"
 
-export const blueprintPath = path.resolve(__dirname, "../assets/blueprints")
 export const emotePath = path.resolve(__dirname, "../assets/emotes")
 export const cachePath = path.resolve(__dirname, "../assets/emotes/cache")
 

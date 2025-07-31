@@ -10,7 +10,6 @@
         <!-- Emote Options - appears second on mobile -->
         <n-grid-item :span="isMobile ? 1 : 1" class="options-item">
           <emote-options
-            :blueprints="blueprints"
             :characters="characters"
             :parts="parts"
           />
@@ -29,13 +28,13 @@ import EmoteOptions from "@/components/EmoteOptions.vue"
 import EmotePreview from "@/components/EmotePreview.vue"
 
 const store = useStore()
-const { blueprints, characters, parts } = storeToRefs(store)
+const { characters, parts } = storeToRefs(store)
 
 // Use responsive composable
 const { isMobile, gridCols } = useResponsive()
 
-// Initial population of blueprints.
-store.fetchBlueprints()
+// Initial population of characters.
+store.fetchCharacters()
 </script>
 
 <style scoped>

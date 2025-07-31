@@ -32,3 +32,21 @@ export const listAllPartsForCharacter = async(character:string):Promise<string[]
     throw (new Error("listAllPartsForCharacter failed!"))
   }
 }
+
+export const listAllCharacters = async():Promise<string[]> => {
+  try {
+    const dirContents = await fsPromises.readdir(`${emotePath}`)
+    const characters = new Set<string>()
+
+    dirContents.forEach((partFilename) => {
+      if (path.extname(partFilename) === ".png") {
+        const character = partFilename.split("_")[0]
+        characters.add(character)
+      }
+    })
+
+    return Array.from(characters).sort()
+  } catch (error) {
+    throw (new Error("listAllCharacters failed!"))
+  }
+}

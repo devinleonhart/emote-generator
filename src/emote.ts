@@ -4,15 +4,15 @@ import { Canvas, Image } from "canvas"
 import mergeImages from "merge-images"
 import {cachePath, emotePath} from "./settings.js"
 
-import type { Blueprint, Part } from "./types/main"
+import type { EmoteConfig, Part } from "./types/main"
 
 const fsPromises = fs.promises
 const fsConstants = fs.constants
 
-export const buildEmote = async(key:string, blueprint:Blueprint):Promise<string> => {
+export const buildEmote = async(key:string, emoteConfig:EmoteConfig):Promise<string> => {
 
   try {
-    const partData = await readEmoteParts(blueprint)
+    const partData = await readEmoteParts(emoteConfig)
 
     let head: string | Buffer = ""
     let eyebrows: string | Buffer = ""
@@ -90,7 +90,7 @@ export const getCachedEmotePath = async(key:string):Promise<string | null> => {
   }
 }
 
-function readEmoteParts({ character, head, eyebrows, eyes, mouth }:Blueprint) {
+function readEmoteParts({ character, head, eyebrows, eyes, mouth }:EmoteConfig) {
   const parts:Part[] = [
     { key: "head", name: head, src: Buffer.from("")},
     { key: "eyebrows", name: eyebrows, src: Buffer.from("")},

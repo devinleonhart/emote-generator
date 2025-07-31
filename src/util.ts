@@ -1,9 +1,9 @@
-import type { Blueprint } from "./types/main"
+import type { EmoteConfig } from "./types/main"
 
-export const allPartsPresent = (blueprint: Blueprint): boolean => {
-  return (!!blueprint.character) &&
-    (!!blueprint.head) &&
-    (!!blueprint.eyebrows) &&
-    (!!blueprint.eyes) &&
-    (!!blueprint.mouth)
+export const allPartsPresent = (emoteConfig: EmoteConfig): boolean => {
+  return (!!emoteConfig.character) &&
+  (!!emoteConfig.head) &&
+  (!!emoteConfig.eyebrows) &&
+  (!!emoteConfig.eyes) &&
+  (!!emoteConfig.mouth)
 }

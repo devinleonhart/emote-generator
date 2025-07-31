@@ -83,7 +83,6 @@ emote-generator/
 │   ├── app.ts             # Express server setup
 │   ├── routes.ts          # API endpoints
 │   ├── emote.ts           # Emote generation logic
-│   ├── blueprint.ts       # Blueprint management
 │   ├── part.ts            # Part management
 │   └── types/             # TypeScript type definitions
 ├── generator/              # Frontend Vue.js application
@@ -93,8 +92,7 @@ emote-generator/
 │   │   └── App.vue        # Main application component
 │   └── package.json
 ├── assets/                 # Static assets
-│   ├── emotes/            # Character part images
-│   └── blueprints/        # Character blueprint definitions
+│   └── emotes/            # Character part images
 ├── docker-compose.yml     # Development environment
 ├── Dockerfile.dev         # Backend development container
 └── dev.sh                 # Development startup script
@@ -130,16 +128,15 @@ docker compose ps      # Check service status
 ## 🌐 API Endpoints
 
 ### Emote Generation
-- `GET /emote` - Generate emotes (by blueprint key or custom parts)
+- `GET /emote` - Generate emotes from custom parts
 - `GET /emote/cache` - List cached emotes
 
 ### Parts Management
 - `GET /part` - List all available parts
 - `GET /part/:character` - List parts for specific character
 
-### Blueprint Management
-- `GET /blueprint` - List all blueprints
-- `GET /blueprint/:character` - List blueprints for specific character
+### Character Management
+- `GET /character` - List all available characters
 
 ## 🎨 Character System
 
@@ -151,18 +148,7 @@ docker compose ps      # Check service status
    Example: sophie_eyes_happy.png
    ```
 
-2. **Create Blueprint File** in `assets/blueprints/`:
-   ```json
-   {
-     "sophie_happy": {
-       "character": "sophie",
-       "head": "normal",
-       "eyes": "happy",
-       "eyebrows": "normal",
-       "mouth": "smile"
-     }
-   }
-   ```
+The application will automatically discover characters by scanning the parts directory.
 
 ### Supported Parts
 - **head**: Different head poses/expressions

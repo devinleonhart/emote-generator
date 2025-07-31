@@ -101,7 +101,7 @@ COPY --from=builder /app/dist ./dist
 COPY --from=frontend-builder /frontend/dist ./public
 
 # Create assets directory structure (for CI where assets might not exist)
-RUN mkdir -p assets/blueprints assets/emotes/cache
+RUN mkdir -p assets/emotes/cache
 
 # Expose port
 EXPOSE 4000

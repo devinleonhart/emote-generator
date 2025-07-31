@@ -12,17 +12,7 @@
         />
       </n-form-item>
 
-      <n-form-item label="Blueprint">
-        <n-select
-          v-model:value="state.sBlueprint"
-          filterable
-          clearable
-          :options="blueprintOptions"
-          placeholder="Select a blueprint"
-          :disabled="!selectedCharacter"
-          @update:value="onBlueprintChange"
-        />
-      </n-form-item>
+
 
       <n-card v-if="selectedCharacter" title="Custom Parts" size="small">
         <n-space vertical :size="16">
@@ -59,16 +49,14 @@ import PartPicker from "./PartPicker.vue"
 import type { Parts } from "../../types/main"
 
 const props = defineProps<{
-    blueprints: string[],
     characters: string[],
     parts: Parts,
   }>()
 
-const { blueprints, characters} = toRefs(props)
+const { characters} = toRefs(props)
 
 const state = reactive({
   sCharacter: "",
-  sBlueprint: "",
 })
 
 const store = useStore()
@@ -83,12 +71,7 @@ const characterOptions = computed(() =>
   }))
 )
 
-const blueprintOptions = computed(() =>
-  blueprints.value.map(blueprint => ({
-    label: removeName(blueprint),
-    value: blueprint
-  }))
-)
+
 
 // Watch for changes in selectedCharacter from store and update local state
 watch(selectedCharacter, (newCharacter) => {
@@ -97,23 +80,12 @@ watch(selectedCharacter, (newCharacter) => {
   }
 })
 
-// Removed automatic blueprint selection to prevent unwanted network requests
-
-function onBlueprintChange(value: string) {
-  if(value && value !== "") {
-    store.resetParts()
-    resetRadioButtons()
-    store.selectBlueprint(value)
-  }
-}
-
 function onCharacterChange(value: string) {
   if(value && value !== "") {
     store.selectCharacter(value)
     store.resetEmoteURL()
     store.resetParts()
     resetRadioButtons()
-    state.sBlueprint = ""
   }
 }
 

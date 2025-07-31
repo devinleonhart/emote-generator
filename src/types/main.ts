@@ -1,8 +1,4 @@
-export interface BlueprintCollection {
-  [key: string]: Blueprint
-}
-
-export interface Blueprint {
+export interface EmoteConfig {
   character: string;
   head: string;
   eyes: string;
