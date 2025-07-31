@@ -38,6 +38,9 @@ export const useStore = defineStore("main", {
         const { data } = await axios.get("/blueprint")
         this.$state.blueprints = data
         this.$state.characters = getCharactersFromBluePrints(data)
+
+        // Auto-select a random character and parts after fetching blueprints
+        await this.selectRandomCharacterAndParts()
       } catch (error) {
         console.error(error)
       }
@@ -54,6 +57,14 @@ export const useStore = defineStore("main", {
       try {
         const { data } = await axios.get(`/part/${character}`)
         this.$state.parts = sortParts(data)
+
+        // If this is the initial random selection, select random parts after fetching
+        if (this.$state.selectedCharacter === character && Object.keys(this.$state.selectedParts).length === 0) {
+          // Small delay to ensure components are mounted
+          setTimeout(() => {
+            this.selectRandomParts()
+          }, 100)
+        }
       } catch (error) {
         console.error(error)
       }
@@ -82,6 +93,24 @@ export const useStore = defineStore("main", {
         this.$state.selectedParts.mouth) {
         this.buildEmoteURLWithParts()
       }
+    },
+    selectRandomCharacterAndParts() {
+      // Select a random character
+      if (this.$state.characters.length > 0) {
+        const randomCharacter = this.$state.characters[Math.floor(Math.random() * this.$state.characters.length)]
+        this.selectCharacter(randomCharacter)
+      }
+    },
+    selectRandomParts() {
+      const partTypes: PartsKey[] = ["head", "eyebrows", "eyes", "mouth"]
+
+      partTypes.forEach(partType => {
+        const availableParts = this.$state.parts[partType]
+        if (availableParts && availableParts.length > 0) {
+          const randomPart = availableParts[Math.floor(Math.random() * availableParts.length)]
+          this.selectPart(partType, randomPart)
+        }
+      })
     }
   }
 })

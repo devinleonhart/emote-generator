@@ -1,68 +1,52 @@
 <template>
   <section id="emote-options">
-    <div class="field">
-      <label class="label">Character</label>
-      <div class="select is-medium">
-        <select
-          v-model="state.sCharacter"
-          @change="onCharacterChange"
-        >
-          <option
-            v-for="(character, index) in characters"
-            :key="index"
-            :value="character"
-          >
-            {{ capitalize(character) }}
-          </option>
-        </select>
-      </div>
-    </div>
+    <n-space vertical :size="16">
+      <n-form-item label="Character">
+        <n-select
+          v-model:value="state.sCharacter"
+          :options="characterOptions"
+          placeholder="Select a character"
+          @update:value="onCharacterChange"
+        />
+      </n-form-item>
 
-    <div class="field">
-      <label class="label">Blueprint</label>
-      <div class="select is-medium">
-        <select
-          v-model="state.sBlueprint"
+      <n-form-item label="Blueprint">
+        <n-select
+          v-model:value="state.sBlueprint"
+          :options="blueprintOptions"
+          placeholder="Select a blueprint"
           :disabled="!selectedCharacter"
-          @change="onBlueprintChange"
-        >
-          <option
-            v-for="(blueprint, index) in blueprints"
-            :key="index"
-            :value="blueprint"
-          >
-            {{ removeName(blueprint) }}
-          </option>
-        </select>
-      </div>
-    </div>
+          @update:value="onBlueprintChange"
+        />
+      </n-form-item>
 
-    <div
-      v-if="selectedCharacter"
-      class="box"
-    >
-      <part-picker
-        :part-selection="parts.head || []"
-        :part-name="'head'"
-      />
-      <part-picker
-        :part-selection="parts.eyebrows || []"
-        :part-name="'eyebrows'"
-      />
-      <part-picker
-        :part-selection="parts.eyes || []"
-        :part-name="'eyes'"
-      />
-      <part-picker
-        :part-selection="parts.mouth || []"
-        :part-name="'mouth'"
-      />
-    </div>
+      <n-card v-if="selectedCharacter" title="Custom Parts" size="small">
+        <n-space vertical :size="16">
+          <part-picker
+            :part-selection="parts.head || []"
+            :part-name="'head'"
+          />
+          <part-picker
+            :part-selection="parts.eyebrows || []"
+            :part-name="'eyebrows'"
+          />
+          <part-picker
+            :part-selection="parts.eyes || []"
+            :part-name="'eyes'"
+          />
+          <part-picker
+            :part-selection="parts.mouth || []"
+            :part-name="'mouth'"
+          />
+        </n-space>
+      </n-card>
+    </n-space>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs, watch } from "vue"
+import { reactive, toRefs, watch, computed } from "vue"
+import { NFormItem, NSelect, NCard, NSpace } from "naive-ui"
 import { storeToRefs } from "pinia"
 import { useStore } from "../stores/emoteStore"
 import { capitalize, removeName } from "../util"
@@ -87,6 +71,28 @@ const store = useStore()
 
 const { selectedCharacter } = storeToRefs(store)
 
+// Convert arrays to select options
+const characterOptions = computed(() =>
+  characters.value.map(char => ({
+    label: capitalize(char),
+    value: char
+  }))
+)
+
+const blueprintOptions = computed(() =>
+  blueprints.value.map(blueprint => ({
+    label: removeName(blueprint),
+    value: blueprint
+  }))
+)
+
+// Watch for changes in selectedCharacter from store and update local state
+watch(selectedCharacter, (newCharacter) => {
+  if (newCharacter && newCharacter !== state.sCharacter) {
+    state.sCharacter = newCharacter
+  }
+})
+
 watch(blueprints, async (newBlueprints) => {
   if (state.sCharacter !== "" && newBlueprints.length > 0) {
     state.sBlueprint = newBlueprints[0]
@@ -94,21 +100,21 @@ watch(blueprints, async (newBlueprints) => {
   }
 })
 
-function onBlueprintChange(event:any) {
-  if(event.target.value && event.target.value != "") {
+function onBlueprintChange(value: string) {
+  if(value && value !== "") {
     store.resetParts()
     resetRadioButtons()
-    store.selectBlueprint(event.target.value)
+    store.selectBlueprint(value)
   }
 }
 
-function onCharacterChange(event:any) {
-  if(event.target.value && event.target.value != "") {
-    store.selectCharacter(event.target.value)
+function onCharacterChange(value: string) {
+  if(value && value !== "") {
+    store.selectCharacter(value)
     store.resetEmoteURL()
     store.resetParts()
     resetRadioButtons()
-    state.sBlueprint=""
+    state.sBlueprint = ""
   }
 }
 
@@ -118,8 +124,17 @@ function resetRadioButtons() {
     radio.checked = false
   })
 }
-
 </script>
 
-<style>
+<style scoped>
+#emote-options {
+  width: 100%;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  #emote-options {
+    padding: 0 8px;
+  }
+}
 </style>
