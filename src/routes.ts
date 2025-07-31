@@ -30,11 +30,11 @@ export const routes = (app:Express):void => {
           res.sendStatus(404)
         }
       } catch (error) {
-          if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        if (error instanceof Error) {
+          res.statusMessage = error.message
+        } else {
+          res.statusMessage = "Unknown server error"
+        }
         res.sendStatus(500)
       }
     } else if (allPartsPresent(blueprint)) {
@@ -43,10 +43,10 @@ export const routes = (app:Express):void => {
         res.sendFile(cachedEmotePath)
       } catch (error) {
         if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+          res.statusMessage = error.message
+        } else {
+          res.statusMessage = "Unknown server error"
+        }
         res.sendStatus(500)
       }
     } else {
@@ -60,10 +60,10 @@ export const routes = (app:Express):void => {
       res.send(await getCachedEmoteList())
     } catch (error) {
       if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        res.statusMessage = error.message
+      } else {
+        res.statusMessage = "Unknown server error"
+      }
       res.sendStatus(500)
     }
   })
@@ -73,10 +73,10 @@ export const routes = (app:Express):void => {
       res.send(await listAllParts())
     } catch (error) {
       if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        res.statusMessage = error.message
+      } else {
+        res.statusMessage = "Unknown server error"
+      }
       res.sendStatus(500)
     }
   })
@@ -87,10 +87,10 @@ export const routes = (app:Express):void => {
       res.send(await listAllPartsForCharacter(character))
     } catch (error) {
       if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        res.statusMessage = error.message
+      } else {
+        res.statusMessage = "Unknown server error"
+      }
       res.sendStatus(500)
     }
   })
@@ -100,10 +100,10 @@ export const routes = (app:Express):void => {
       res.send(await getAllBlueprints())
     } catch (error) {
       if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        res.statusMessage = error.message
+      } else {
+        res.statusMessage = "Unknown server error"
+      }
       res.sendStatus(500)
     }
   })
@@ -114,10 +114,10 @@ export const routes = (app:Express):void => {
       res.send(await getAllBlueprintsForCharacter(character))
     } catch (error) {
       if (error instanceof Error) {
-            res.statusMessage = error.message;
-          } else {
-            res.statusMessage = "Unknown server error";
-          }
+        res.statusMessage = error.message
+      } else {
+        res.statusMessage = "Unknown server error"
+      }
       res.sendStatus(500)
     }
   })
