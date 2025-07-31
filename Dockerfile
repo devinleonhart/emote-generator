@@ -38,6 +38,33 @@ COPY nodemon.json ./
 # Build the application
 RUN npm run build
 
+# Frontend builder stage
+FROM node:24.4.1-slim AS frontend-builder
+
+ENV FRONTEND_PATH=/frontend
+
+# Create frontend directory
+WORKDIR $FRONTEND_PATH
+
+# Copy frontend package files
+COPY generator/package*.json ./
+
+# Install frontend dependencies
+RUN npm install
+
+# Copy frontend source and config
+COPY generator/src/ ./src/
+COPY generator/public/ ./public/
+COPY generator/types/ ./types/
+COPY generator/index.html ./
+COPY generator/vite.config.ts ./
+COPY generator/tsconfig.json ./
+COPY generator/eslint.config.js ./
+COPY config/ ./../config/
+
+# Build the frontend
+RUN npm run build
+
 # Production stage
 FROM node:24.4.1-slim AS production
 
@@ -69,6 +96,9 @@ RUN npm rebuild canvas
 
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
+
+# Copy built frontend from frontend-builder stage
+COPY --from=frontend-builder /frontend/dist ./public
 
 # Create assets directory structure (for CI where assets might not exist)
 RUN mkdir -p assets/blueprints assets/emotes/cache

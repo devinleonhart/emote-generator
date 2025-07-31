@@ -2,11 +2,21 @@ import { getAllBlueprints, getAllBlueprintsForCharacter, getBlueprint } from "./
 import { buildEmote, getCachedEmoteList, getCachedEmotePath } from "./emote.js"
 import { listAllParts, listAllPartsForCharacter } from "./part.js"
 import { allPartsPresent } from "./util.js"
+import path from "path"
+import { fileURLToPath } from "url"
 
 import type { Express } from "express"
 import type { Blueprint } from "./types/main"
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
 export const routes = (app:Express):void => {
+  // Serve Vue frontend at root path
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"))
+  })
+
   app.get("/emote", async(req, res) => {
     const key = req.query.key as string
     const blueprint: Blueprint = {
