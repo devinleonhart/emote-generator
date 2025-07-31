@@ -93,12 +93,7 @@ watch(selectedCharacter, (newCharacter) => {
   }
 })
 
-watch(blueprints, async (newBlueprints) => {
-  if (state.sCharacter !== "" && newBlueprints.length > 0) {
-    state.sBlueprint = newBlueprints[0]
-    store.selectBlueprint(state.sBlueprint)
-  }
-})
+// Removed automatic blueprint selection to prevent unwanted network requests
 
 function onBlueprintChange(value: string) {
   if(value && value !== "") {

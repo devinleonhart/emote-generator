@@ -58,8 +58,11 @@ export const useStore = defineStore("main", {
         const { data } = await axios.get(`/part/${character}`)
         this.$state.parts = sortParts(data)
 
-        // If this is the initial random selection, select random parts after fetching
-        if (this.$state.selectedCharacter === character && Object.keys(this.$state.selectedParts).length === 0) {
+        // Only auto-select random parts if this is the initial load (not a manual character selection)
+        // and if we're still on the same character that was randomly selected
+        if (this.$state.selectedCharacter === character &&
+            Object.keys(this.$state.selectedParts).length === 0 &&
+            this.$state.blueprints.length > 0) {
           // Small delay to ensure components are mounted
           setTimeout(() => {
             this.selectRandomParts()
@@ -81,6 +84,9 @@ export const useStore = defineStore("main", {
     },
     selectCharacter(character: string) {
       this.$state.selectedCharacter = character
+      this.$state.selectedBlueprint = ""
+      this.$state.selectedParts = {} as SelectedParts
+      this.$state.emoteURL = ""
       this.fetchBlueprintsForCharacter(character)
       this.fetchPartsForCharacter(character)
     },
