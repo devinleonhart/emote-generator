@@ -26,7 +26,7 @@ export const helmetOptions: HelmetOptions = {
       "default-src": ["'self'"],
       "img-src": ["'self'"],
       "script-src": null,
-      "style-src": ["'self'"],
+      "style-src": ["'self'", "'unsafe-inline'"],
       "script-src-attr": null,
     },
   },
