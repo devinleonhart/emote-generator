@@ -1,0 +1,42 @@
+FROM node:24.4.1-slim
+
+ENV APP_PATH=/app
+
+# Install required build dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    g++ \
+    build-essential \
+    libcairo2-dev \
+    libjpeg-dev \
+    libpango1.0-dev \
+    libgif-dev \
+    libpixman-1-dev \
+    libpangomm-1.4-dev \
+    libjpeg-turbo-progs \
+    libfreetype6-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR $APP_PATH
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies with npm install to avoid platform-specific issues
+RUN npm install
+
+# Rebuild canvas module for the current architecture
+RUN npm rebuild canvas
+
+# Copy source code
+COPY . .
+
+# Create cache directory
+RUN mkdir -p assets/emotes/cache
+
+# Expose port
+EXPOSE 4000
+
+# Default command (can be overridden in docker-compose)
+CMD ["npm", "run", "dev"]

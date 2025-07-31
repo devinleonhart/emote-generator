@@ -1,0 +1,24 @@
+FROM node:24.4.1-slim
+
+ENV APP_PATH=/app
+
+# Create app directory
+WORKDIR $APP_PATH
+
+# Copy package files
+COPY package*.json ./
+
+# Remove package-lock.json and node_modules to fix Rollup ARM64 issue
+RUN rm -f package-lock.json && rm -rf node_modules
+
+# Install dependencies with npm install to avoid platform-specific issues
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 5173
+
+# Default command (can be overridden in docker-compose)
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

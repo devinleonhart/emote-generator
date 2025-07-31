@@ -1,0 +1,46 @@
+services:
+  # Backend API service
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./src:/app/src
+      - ./assets:/app/assets
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./nodemon.json:/app/nodemon.json
+    environment:
+      - NODE_ENV=development
+      - PORT=4000
+    working_dir: /app
+    command: npm run dev:server
+    networks:
+      - emote-network
+
+  # Frontend Vue app service
+  frontend:
+    build:
+      context: ./generator
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./generator/src:/app/src
+      - ./generator/public:/app/public
+      - ./generator/package.json:/app/package.json
+      - ./generator/vite.config.ts:/app/vite.config.ts
+    environment:
+      - VITE_DEVELOPMENT_API_URL=http://localhost:4000
+    working_dir: /app
+    command: npm run dev -- --host 0.0.0.0
+    networks:
+      - emote-network
+    depends_on:
+      - api
+
+networks:
+  emote-network:
+    driver: bridge

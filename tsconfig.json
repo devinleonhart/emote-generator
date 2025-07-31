@@ -16,8 +16,12 @@
     "sourceMap": true,
     "rootDir": "src",
     "outDir": "dist",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@types/*": ["src/types/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "src/types"],
   "exclude": ["dist", "node_modules"]
 }

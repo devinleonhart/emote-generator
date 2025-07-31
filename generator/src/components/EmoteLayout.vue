@@ -3,6 +3,7 @@
     id="emote-generator"
     class="container"
   >
+    <h1 class="title">Cheese</h1>
     <div class="columns is-centered">
       <emote-options
         class="column is-half"

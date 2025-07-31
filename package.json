@@ -5,12 +5,16 @@
   "homepage": "https://github.com/devinleonhart/emote-generator",
   "repository": {
     "type": "git",
-    "url": "git@github.com:devinleonhart/emote-generator.git"
+    "url": "git@github.com/devinleonhart/emote-generator.git"
   },
   "license": "MIT",
+  "engines": {
+    "node": "24.4.1"
+  },
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon ./src/app.ts",
+    "dev": "tsc --watch & wait-on dist/app.js && node dist/app.js",
+    "dev:server": "tsc --watch & wait-on dist/app.js && nodemon dist/app.js",
     "lint": "eslint --ext .ts src",
     "start": "node ./dist/app.js"
   },
@@ -31,10 +35,10 @@
     "@typescript-eslint/parser": "^8.38.0",
     "eslint": "^9.32.0",
     "eslint-plugin-vue": "^10.3.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
+    "nodemon": "^3.0.3",
     "typescript": "^5.8.3",
-    "typescript-eslint": "8.38.0"
+    "typescript-eslint": "8.38.0",
+    "wait-on": "^7.2.0"
   },
   "type": "module"
 }

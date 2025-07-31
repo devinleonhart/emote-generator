@@ -1,7 +1,7 @@
 import { defineConfig } from "vite"
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from "node:url"
 import vue from "@vitejs/plugin-vue"
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
+import { quasar, transformAssetUrls } from "@quasar/vite-plugin"
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -14,8 +14,15 @@ export default defineConfig({
     // https://github.com/quasarframework/quasar/blob/dev/vite-plugin/index.d.ts
     quasar({
       sassVariables: fileURLToPath(
-        new URL('./src/quasar-variables.sass', import.meta.url)
+        new URL("./src/quasar-variables.sass", import.meta.url)
       )
     })
-  ]
+  ],
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+    watch: {
+      usePolling: true
+    }
+  }
 })
