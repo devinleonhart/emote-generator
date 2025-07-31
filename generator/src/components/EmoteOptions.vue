@@ -4,6 +4,8 @@
       <n-form-item label="Character">
         <n-select
           v-model:value="state.sCharacter"
+          filterable
+          clearable
           :options="characterOptions"
           placeholder="Select a character"
           @update:value="onCharacterChange"
@@ -13,6 +15,8 @@
       <n-form-item label="Blueprint">
         <n-select
           v-model:value="state.sBlueprint"
+          filterable
+          clearable
           :options="blueprintOptions"
           placeholder="Select a blueprint"
           :disabled="!selectedCharacter"
