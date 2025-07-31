@@ -4,7 +4,7 @@ import { Canvas, Image } from "canvas"
 import mergeImages from "merge-images"
 import {cachePath, emotePath} from "./settings.js"
 
-import type { Blueprint, Part } from "src/types/main.js"
+import type { Blueprint, Part } from "./types/main"
 
 const fsPromises = fs.promises
 const fsConstants = fs.constants
@@ -19,7 +19,7 @@ export const buildEmote = async(key:string, blueprint:Blueprint):Promise<string>
     let eyes: string | Buffer = ""
     let mouth: string | Buffer = ""
 
-    partData.forEach((part) => {
+    partData.forEach((part: Part) => {
       switch (part.key) {
       case "head":
         head = part.src

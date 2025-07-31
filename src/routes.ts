@@ -4,7 +4,7 @@ import { listAllParts, listAllPartsForCharacter } from "./part.js"
 import { allPartsPresent } from "./util.js"
 
 import type { Express } from "express"
-import type { Blueprint } from "src/types/main.js"
+import type { Blueprint } from "./types/main"
 
 export const routes = (app:Express):void => {
   app.get("/emote", async(req, res) => {

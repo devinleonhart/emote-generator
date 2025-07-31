@@ -6,7 +6,8 @@
     "node": "24.4.1"
   },
   "scripts": {
-    "build": "vue-tsc --noEmit && vite build",
+    "tsc": "vue-tsc --noEmit",
+    "build": "npm run tsc && vite build",
     "dev": "vite",
     "lint": "eslint --ext .ts,.vue src"
   },

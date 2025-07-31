@@ -3,7 +3,7 @@ import path from "path"
 import { blueprintPath } from "./settings.js"
 const fsPromises = fs.promises
 
-import type { Blueprint, BlueprintCollection } from "src/types/main.js"
+import type { Blueprint, BlueprintCollection } from "./types/main"
 
 let blueprints:BlueprintCollection = {}
 

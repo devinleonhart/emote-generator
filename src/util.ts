@@ -1,4 +1,4 @@
-import type { Blueprint } from "src/types/main"
+import type { Blueprint } from "./types/main"
 
 export const allPartsPresent = (blueprint: Blueprint): boolean => {
   return (!!blueprint.character) &&

@@ -1,5 +1,17 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "extends": "../config/tsconfig.vue.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@types/*": ["types/*"],
+      "@/components/*": ["src/components/*"],
+      "@/stores/*": ["src/stores/*"],
+      "@/composables/*": ["src/composables/*"],
+      "@/util": ["src/util"],
+      "@/settings": ["src/settings"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue", "types/**/*.d.ts"],
   "exclude": ["dist", "node_modules"]
 }

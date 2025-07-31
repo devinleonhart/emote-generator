@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NConfigProvider, NMessageProvider, NDialogProvider, NLoadingBarProvider } from "naive-ui"
 import { darkTheme } from "naive-ui"
-import EmoteLayout from "./components/EmoteLayout.vue"
+import EmoteLayout from "@/components/EmoteLayout.vue"
 </script>
 
 <template>

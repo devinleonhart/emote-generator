@@ -12,7 +12,8 @@
     "node": "24.4.1"
   },
   "scripts": {
-    "build": "tsc",
+    "tsc": "tsc --noEmit",
+    "build": "npm run tsc && tsc",
     "dev": "tsc --watch & wait-on dist/app.js && node dist/app.js",
     "dev:server": "tsc --watch & wait-on dist/app.js && nodemon dist/app.js",
     "lint": "eslint --ext .ts src",

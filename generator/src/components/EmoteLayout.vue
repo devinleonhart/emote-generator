@@ -23,10 +23,10 @@
 <script lang="ts" setup>
 import { NCard, NGrid, NGridItem } from "naive-ui"
 import { storeToRefs } from "pinia"
-import { useStore } from "../stores/emoteStore"
-import { useResponsive } from "../composables"
-import EmoteOptions from "./EmoteOptions.vue"
-import EmotePreview from "./EmotePreview.vue"
+import { useStore } from "@/stores/emoteStore"
+import { useResponsive } from "@/composables"
+import EmoteOptions from "@/components/EmoteOptions.vue"
+import EmotePreview from "@/components/EmotePreview.vue"
 
 const store = useStore()
 const { blueprints, characters, parts } = storeToRefs(store)

@@ -11,7 +11,7 @@ interface emoteSettings {
 
 const emoteSettings:emoteSettings = {
   apiOptions: {
-    baseURL: import.meta.env.PROD ? window.location.origin : import.meta.env.VITE_DEVELOPMENT_API_URL,
+    baseURL: import.meta.env.PROD ? window.location.origin : "/api",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

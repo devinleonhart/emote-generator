@@ -1,6 +1,6 @@
 import axios from "axios"
 import { defineStore } from "pinia"
-import settings from "../settings"
+import settings from "@/settings"
 
 import type { Parts, PartsKey, SelectedParts } from "../../types/main"
 

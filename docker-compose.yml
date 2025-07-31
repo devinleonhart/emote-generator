@@ -32,8 +32,9 @@ services:
       - ./generator/public:/app/public
       - ./generator/package.json:/app/package.json
       - ./generator/vite.config.ts:/app/vite.config.ts
-    environment:
-      - VITE_DEVELOPMENT_API_URL=http://localhost:4000
+      - ./generator/tsconfig.json:/app/tsconfig.json
+      - ./generator/eslint.config.js:/app/eslint.config.js
+      - ./config:/app/../config
     working_dir: /app
     command: npm run dev -- --host 0.0.0.0
     networks:
