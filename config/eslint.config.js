@@ -1,17 +1,14 @@
-import eslintPluginVue from "eslint-plugin-vue";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-import vueParser from "vue-eslint-parser";
 
 export default [
   {
-    files: ["**/*.ts", "**/*.vue"],
+    files: ["**/*.ts"],
     languageOptions: {
       ecmaVersion: 2021,
       sourceType: "module",
-      parser: vueParser,
+      parser: tsParser,
       parserOptions: {
-        parser: tsParser,
         ecmaVersion: 2021,
         sourceType: "module",
       },
@@ -21,7 +18,6 @@ export default [
     },
     plugins: {
       "@typescript-eslint": typescriptEslint,
-      vue: eslintPluginVue,
     },
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

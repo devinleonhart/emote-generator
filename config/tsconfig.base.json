@@ -1,17 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "../",
-    "paths": {
-      "src/types/*": ["src/types/*"],
-      "@types/*": ["src/types/*"],
-      "@/*": ["src/*"],
-      "@/components/*": ["src/components/*"],
-      "@/stores/*": ["src/stores/*"],
-      "@/composables/*": ["src/composables/*"],
-      "@/utils/*": ["src/*"],
-      "@/util": ["src/util"],
-      "@/settings": ["src/settings"]
-    },
     "target": "ES2022",
     "module": "ESNext",
     "allowSyntheticDefaultImports": true,

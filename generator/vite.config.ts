@@ -21,10 +21,20 @@ export default defineConfig({
       "@/settings": path.resolve(__dirname, "./src/settings")
     }
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes("naive-ui")) return "naive-ui"
+          if (id.includes("node_modules")) return "vendor"
+        }
+      }
+    }
+  },
   server: {
     proxy: {
       "/api": {
-        target: "http://api:4000",
+        target: `http://${process.env.API_HOST ?? "localhost"}:4000`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, "")
       }

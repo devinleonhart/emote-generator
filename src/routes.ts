@@ -5,7 +5,7 @@ import path from "path"
 import { fileURLToPath } from "url"
 
 import type { Express } from "express"
-import type { EmoteConfig } from "./types/main"
+import type { EmoteConfig } from "./types/main.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

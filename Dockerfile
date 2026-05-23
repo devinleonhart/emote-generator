@@ -1,4 +1,4 @@
-FROM node:24.4.1-slim AS builder
+FROM node:24.16.0-slim AS builder
 
 ENV APP_PATH=/app
 
@@ -39,7 +39,7 @@ COPY nodemon.json ./
 RUN npm run build
 
 # Frontend builder stage
-FROM node:24.4.1-slim AS frontend-builder
+FROM node:24.16.0-slim AS frontend-builder
 
 ENV FRONTEND_PATH=/frontend
 
@@ -66,7 +66,7 @@ COPY config/ ./../config/
 RUN npm run build
 
 # Production stage
-FROM node:24.4.1-slim AS production
+FROM node:24.16.0-slim AS production
 
 ENV APP_PATH=/app
 ENV NODE_ENV=production

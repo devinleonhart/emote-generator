@@ -35,6 +35,8 @@ services:
       - ./generator/tsconfig.json:/app/tsconfig.json
       - ./generator/eslint.config.js:/app/eslint.config.js
       - ./config:/app/../config
+    environment:
+      - API_HOST=api
     working_dir: /app
     command: npm run dev -- --host 0.0.0.0
     networks:

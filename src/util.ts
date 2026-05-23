@@ -1,4 +1,4 @@
-import type { EmoteConfig } from "./types/main"
+import type { EmoteConfig } from "./types/main.js"
 
 export const allPartsPresent = (emoteConfig: EmoteConfig): boolean => {
   return (!!emoteConfig.character) &&

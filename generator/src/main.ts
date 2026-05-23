@@ -1,7 +1,6 @@
 import { createApp } from "vue"
 import { createPinia } from "pinia"
 import axios from "axios"
-import VueAxios from "vue-axios"
 import settings from "./settings"
 import App from "./App.vue"
 import { createDiscreteApi } from "naive-ui"
@@ -21,7 +20,6 @@ const app = createApp(App)
 const { message } = createDiscreteApi(["message"])
 
 app.use(createPinia())
-app.use(VueAxios, axios)
 
 // Make discrete API available globally
 app.config.globalProperties.$message = message

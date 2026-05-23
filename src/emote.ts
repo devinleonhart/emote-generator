@@ -4,7 +4,7 @@ import { Canvas, Image } from "canvas"
 import mergeImages from "merge-images"
 import {cachePath, emotePath} from "./settings.js"
 
-import type { EmoteConfig, Part } from "./types/main"
+import type { EmoteConfig, Part } from "./types/main.js"
 
 const fsPromises = fs.promises
 const fsConstants = fs.constants
