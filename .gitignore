@@ -1,4 +1,23 @@
 .DS_Store
-assets
-dist
-node_modules
+/assets/
+
+# Rails
+/.bundle
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+!/tmp/pids/
+/tmp/pids/*
+!/tmp/pids/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+/coverage/
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+# Left from the Node build
+/node_modules/
+/generator/
+/dist/

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Emote Generator</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csp_meta_tag %>
+    <meta name="turbo-cache-control" content="no-cache">
+    <%= stylesheet_link_tag "tailwind" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="min-h-screen bg-neutral-50 text-neutral-900">
+    <nav class="bg-nav text-nav-fg border-b border-nav-border" aria-label="Main navigation">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-16">
+        <%= link_to "Emote Generator", root_path, class: "text-xl font-bold text-nav-fg hover:text-nav-muted py-2" %>
+      </div>
+    </nav>
+    <main class="bb-page"><%= yield %></main>
+  </body>
+</html>

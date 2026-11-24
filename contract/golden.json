@@ -1,0 +1,265 @@
+{
+  "/character": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": [
+      "ada",
+      "ben",
+      "cy"
+    ]
+  },
+  "/part": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": [
+      "ada_eyebrows_angry.png",
+      "ada_eyebrows_normal.png",
+      "ada_eyes_glee.png",
+      "ada_eyes_normal.png",
+      "ada_eyes_xd.png",
+      "ada_head_normal.png",
+      "ada_head_tilt.png",
+      "ada_mouth_normal.png",
+      "ada_mouth_yell.png",
+      "ben_eyebrows_angry.png",
+      "ben_eyebrows_normal.png",
+      "ben_eyes_glee.png",
+      "ben_eyes_normal.png",
+      "ben_eyes_xd.png",
+      "ben_head_normal.png",
+      "ben_head_tilt.png",
+      "ben_mouth_normal.png",
+      "ben_mouth_yell.png",
+      "cy_eyebrows_angry.png",
+      "cy_eyebrows_normal.png",
+      "cy_eyes_glee.png",
+      "cy_eyes_normal.png",
+      "cy_eyes_xd.png",
+      "cy_head_normal.png",
+      "cy_head_tilt.png",
+      "cy_mouth_normal.png",
+      "cy_mouth_yell.png"
+    ]
+  },
+  "/part/ada": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": [
+      "ada_eyebrows_angry.png",
+      "ada_eyebrows_normal.png",
+      "ada_eyes_glee.png",
+      "ada_eyes_normal.png",
+      "ada_eyes_xd.png",
+      "ada_head_normal.png",
+      "ada_head_tilt.png",
+      "ada_mouth_normal.png",
+      "ada_mouth_yell.png"
+    ]
+  },
+  "/part/BEN": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": [
+      "ben_eyebrows_angry.png",
+      "ben_eyebrows_normal.png",
+      "ben_eyes_glee.png",
+      "ben_eyes_normal.png",
+      "ben_eyes_xd.png",
+      "ben_head_normal.png",
+      "ben_head_tilt.png",
+      "ben_mouth_normal.png",
+      "ben_mouth_yell.png"
+    ]
+  },
+  "/part/nobody": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": []
+  },
+  "/part/ad": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": []
+  },
+  "/emote/cache": {
+    "status": 200,
+    "headers": {
+      "content-type": "application/json; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": [
+      "ada_normal.png",
+      "old.png"
+    ]
+  },
+  "/ada_normal.png": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/old.png": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/missing.png": {
+    "status": 404,
+    "headers": {
+      "content-type": "text/html; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote?character=ada&head=normal&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote?character=ben&head=normal&eyebrows=normal&eyes=glee&mouth=yell": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote?character=cy&head=tilt&eyebrows=angry&eyes=normal&mouth=normal": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote?character=CY&head=Normal&eyebrows=normal&eyes=XD&mouth=YELL": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote?character=ada&head=tilt&eyebrows=normal&eyes=xd&mouth=yell": {
+    "status": 200,
+    "headers": {
+      "content-type": "image/png",
+      "cross-origin-resource-policy": "cross-origin"
+    }
+  },
+  "/emote": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=ada&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=ada&head=normal&eyes=normal&mouth=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=ada&head=normal&eyebrows=normal&mouth=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=ada&head=normal&eyebrows=normal&eyes=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?head=normal&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=&head=normal&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 400,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Bad Request"
+  },
+  "/emote?character=nobody&head=normal&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 500,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Internal Server Error"
+  },
+  "/emote?character=ada&head=nothing&eyebrows=normal&eyes=normal&mouth=normal": {
+    "status": 500,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Internal Server Error"
+  },
+  "/emote?character=ada&head=normal&eyebrows=nothing&eyes=normal&mouth=normal": {
+    "status": 500,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Internal Server Error"
+  },
+  "/emote?character=ada&head=normal&eyebrows=normal&eyes=nothing&mouth=normal": {
+    "status": 500,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Internal Server Error"
+  },
+  "/emote?character=ada&head=normal&eyebrows=normal&eyes=normal&mouth=nothing": {
+    "status": 500,
+    "headers": {
+      "content-type": "text/plain; charset=utf-8",
+      "cross-origin-resource-policy": "cross-origin"
+    },
+    "body": "Internal Server Error"
+  }
+}
