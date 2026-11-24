@@ -97,13 +97,14 @@ RSpec.describe "Generator" do
   it "can be used with the keyboard" do
     visit "/?character=ada"
     find_field("Character").click
-    find_field("Character").send_keys(:down, :down, :up, :enter)
-    expect(page).to have_field("Character", with: "Ada")
-    fill_in "Character", with: "be"
-    find_field("Character").send_keys(:enter)
-
+    find_field("Character").send_keys(:down, :up, :down, :enter)
     expect(page).to have_field("Character", with: "Ben")
     expect(query).to include("character" => "ben")
+    fill_in "Character", with: "ad"
+    find_field("Character").send_keys(:enter)
+
+    expect(page).to have_field("Character", with: "Ada")
+    expect(query).to include("character" => "ada")
   end
 
   it "copies the whole address" do

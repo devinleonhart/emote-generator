@@ -11,7 +11,7 @@ gem "puma"
 gem "ruby-vips", require: false
 gem "sqlite3"
 gem "stimulus-rails"
-gem "tailnet_mcp", github: "devinleonhart/tailnet-mcp", ref: "2013072625b10713c65705b545ba848879b85938"
+gem "tailnet_mcp", github: "devinleonhart/tailnet-mcp", ref: "904fafe71bd70b10082ce0ec67d8a755bbf277f7"
 gem "tailwindcss-rails"
 gem "turbo-rails"
 
