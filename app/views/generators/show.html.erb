@@ -1,0 +1,51 @@
+<div class="bb-container-lg">
+  <%= turbo_frame_tag "generator" do %>
+    <% if @characters.empty? %>
+      <p class="bb-empty-state bb-empty-state__text">No characters</p>
+    <% else %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6"
+           data-controller="generator" data-generator-character-value="<%= @character %>" data-generator-path-value="<%= emote_path %>">
+        <section class="bb-card bb-card--panel min-w-0 md:order-2 md:self-start text-center" aria-label="Preview">
+          <h2 class="bb-section-heading--sm">Preview</h2>
+          <div class="flex items-center justify-center min-h-50 mb-4">
+            <p class="bb-subtitle" data-generator-target="empty">No emote selected</p>
+            <img alt="Emote" class="max-w-full" width="157" height="150" hidden data-generator-target="image">
+          </div>
+          <button type="button" class="bb-btn bb-btn-primary disabled:opacity-50" disabled
+                  data-generator-target="copy" data-action="generator#copy">Copy URL</button>
+        </section>
+
+        <section class="bb-card bb-card--panel min-w-0 md:order-1" aria-label="Options">
+          <div data-controller="search" class="mb-6">
+            <h2 class="bb-section-heading--sm">Character</h2>
+            <input type="search" class="bb-input mb-3" placeholder="Search characters" aria-label="Search characters"
+                   autocomplete="off" data-search-target="query" data-action="search#filter">
+            <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
+              <% @characters.each do |character| %>
+                <%= link_to character.capitalize, root_path(character:), data: { search_target: "item" },
+                            aria: { current: ("true" if character == @character) },
+                            class: class_names("bb-btn-sm", character == @character ? "bb-btn-primary" : "bb-btn-outline") %>
+              <% end %>
+            </div>
+            <p class="bb-subtitle" hidden data-search-target="none">No characters match</p>
+          </div>
+
+          <% @parts.each do |kind, names| %>
+            <fieldset class="mb-5">
+              <legend class="bb-subheading-sm"><%= kind.capitalize %></legend>
+              <div class="flex flex-wrap gap-x-4 gap-y-2">
+                <% names.each do |name| %>
+                  <label class="inline-flex items-center gap-2">
+                    <%= radio_button_tag kind, name, @chosen&.fetch(kind) == name, autocomplete: "off",
+                                         data: { generator_target: "part", action: "generator#draw" } %>
+                    <%= name %>
+                  </label>
+                <% end %>
+              </div>
+            </fieldset>
+          <% end %>
+        </section>
+      </div>
+    <% end %>
+  <% end %>
+</div>

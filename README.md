@@ -1,206 +1,38 @@
-# emote-generator
+# Emote Generator
 
-Build emotes with ease.
+Composes emotes, pictures of a character, from a head, eyebrows, eyes and a mouth.
 
-An emote generation system that allows users to create custom emotes by combining different facial features (head, eyes, eyebrows, mouth) for various characters.
+## Development
 
-## 🏗️ Architecture
-
-- **Backend API**: Node.js/Express/TypeScript server on port 4000
-- **Frontend**: Vue.js 3/Quasar application on port 5173
-- **Live Reload**: Both services automatically reload on file changes
-
-## 🚀 Development
-
-### Prerequisites
-
-- **Docker Desktop** - [Download here](https://www.docker.com/products/docker-desktop/)
-- **Node.js 24.4.1** (for local development without Docker)
-- **Git**
-
-### Quick Start (Recommended)
-
-Run a single command to start both the backend API and frontend with live reload:
+Everything runs in containers. Without parts of its own, development draws made-up ones.
 
 ```bash
-./dev.sh
+docker compose up web                                    # http://localhost:4000
+docker compose run --rm -e RAILS_ENV=test web bin/ci     # everything CI checks; ends in OK
 ```
 
-This will:
-- ✅ Start the backend API on http://localhost:4000
-- ✅ Start the frontend on http://localhost:5173
-- ✅ Enable live reload for both services
-- ✅ Mount your local files for instant updates
+## Addresses
 
-### Manual Development Setup
+| Address | Gives |
+|---|---|
+| `/` | The page |
+| `/emote?character=&head=&eyebrows=&eyes=&mouth=` | An emote, as PNG |
+| `/character` | The characters |
+| `/part`, `/part/:character` | The parts' file names |
+| `/emote/cache`, `/:name.png` | Emotes that were once stored |
+| `/mcp` | MCP, for hosts and tokens that are allowed |
 
-If you prefer to run services individually:
+Parts are PNG files named `<character>_<part>_<name>.png` in `$ASSETS_DIR/emotes`.
 
-```bash
-# Start both services with Docker Compose
-docker compose up --build
+## Environment
 
-# Or start services in the background
-docker compose up -d --build
+| Variable | Purpose |
+|---|---|
+| `SECRET_KEY_BASE` | Production secret |
+| `ASSETS_DIR` | Holds `emotes/`, and `emotes/cache/` (default `/app/assets`) |
+| `DATABASE_PATH` | SQLite file of the MCP tokens |
+| `APP_HOST` | The host production answers to (default `emote.devleo.me`) |
+| `MCP_HOST` | The only host that `/mcp` answers; unset, `/mcp` does not exist |
 
-# Stop services
-docker compose down
-```
-
-### Local Development (Without Docker)
-
-If you prefer to run services locally without Docker:
-
-#### Backend Setup
-```bash
-# Install dependencies
-npm install
-
-# Start development server with live reload
-npm run dev:server
-
-# Or just compile TypeScript in watch mode
-npm run dev
-```
-
-#### Frontend Setup
-```bash
-# Navigate to generator directory
-cd generator
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-## 📁 Project Structure
-
-```
-emote-generator/
-├── src/                    # Backend API source code
-│   ├── app.ts             # Express server setup
-│   ├── routes.ts          # API endpoints
-│   ├── emote.ts           # Emote generation logic
-│   ├── part.ts            # Part management
-│   └── types/             # TypeScript type definitions
-├── generator/              # Frontend Vue.js application
-│   ├── src/
-│   │   ├── components/    # Vue components
-│   │   ├── stores/        # Pinia state management
-│   │   └── App.vue        # Main application component
-│   └── package.json
-├── assets/                 # Static assets
-│   └── emotes/            # Character part images
-├── docker-compose.yml     # Development environment
-├── Dockerfile.dev         # Backend development container
-└── dev.sh                 # Development startup script
-```
-
-## 🔧 Available Commands
-
-### Backend (Root Directory)
-```bash
-npm run build          # Compile TypeScript
-npm run dev            # Compile TypeScript in watch mode
-npm run dev:server     # Start server with live reload
-npm run start          # Start production server
-npm run lint           # Run ESLint
-```
-
-### Frontend (generator/ Directory)
-```bash
-npm run dev            # Start Vite development server
-npm run build          # Build for production
-npm run lint           # Run ESLint
-```
-
-### Docker Commands
-```bash
-./dev.sh               # Start development environment
-docker compose up      # Start services
-docker compose down    # Stop services
-docker compose logs    # View logs
-docker compose ps      # Check service status
-```
-
-## 🌐 API Endpoints
-
-### Emote Generation
-- `GET /emote` - Generate emotes from custom parts
-- `GET /emote/cache` - List cached emotes
-
-### Parts Management
-- `GET /part` - List all available parts
-- `GET /part/:character` - List parts for specific character
-
-### Character Management
-- `GET /character` - List all available characters
-
-## 🎨 Character System
-
-### Adding New Characters
-
-1. **Add Character Parts** to `assets/emotes/`:
-   ```
-   {character}_{part}_{expression}.png
-   Example: sophie_eyes_happy.png
-   ```
-
-The application will automatically discover characters by scanning the parts directory.
-
-### Supported Parts
-- **head**: Different head poses/expressions
-- **eyes**: Various eye expressions (normal, happy, angry, shocked, etc.)
-- **eyebrows**: Different eyebrow positions (normal, angry, surprised, etc.)
-- **mouth**: Various mouth expressions (smile, pout, yell, grin, etc.)
-
-## 🔄 Live Reload Features
-
-- **Backend**: Changes to `src/` files automatically recompile and restart the server
-- **Frontend**: Changes to `generator/src/` files automatically reload in the browser
-- **Assets**: Changes to `assets/` are immediately available
-
-## 🛠️ Troubleshooting
-
-### Common Issues
-
-#### Docker Issues
-```bash
-# Clean rebuild if you encounter build issues
-docker compose down --volumes
-docker compose up --build
-
-# Check service logs
-docker compose logs api
-docker compose logs frontend
-
-# Check service status
-docker compose ps
-```
-
-#### Port Conflicts
-If ports 4000 or 5173 are already in use:
-```bash
-# Find processes using the ports
-lsof -i :4000
-lsof -i :5173
-
-# Kill the processes or change ports in docker-compose.yml
-```
-
-### Development Tips
-
-1. **File Watching**: The development environment uses file watching for live reload. If you're on macOS or Linux, you might need to increase the file watch limit:
-   ```bash
-   echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
-   sudo sysctl -p
-   ```
-
-2. **Environment Variables**: Create a `.env` file in the root directory for local development:
-   ```
-   NODE_ENV=development
-   PORT=4000
-   VITE_DEVELOPMENT_API_URL=http://localhost:4000
-   ```
+Migrations never run at boot: `bin/rails db:migrate`. Tokens: `bin/rails mcp:tokens:issue MACHINE=<name>`,
+`:list`, `:revoke`.

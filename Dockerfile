@@ -1,110 +1,89 @@
-FROM node:24.16.0-slim AS builder
+FROM ruby:4.0.10-slim-trixie AS base
 
-ENV APP_PATH=/app
+ENV APP_PATH=/app \
+    BUNDLE_VERSION=4.0.22 \
+    BUNDLE_PATH=/usr/local/bundle/gems \
+    RAILS_PORT=4000
 
-# Install required build dependencies
-RUN apt-get update && apt-get install -y \
-    python3 \
-    g++ \
+WORKDIR $APP_PATH
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    libsqlite3-0 \
+    libvips42t64 \
+    tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN gem install bundler --version "$BUNDLE_VERSION" --no-document
+
+FROM base AS build_base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    libcairo2-dev \
-    libjpeg-dev \
-    libpango1.0-dev \
-    libgif-dev \
-    libpixman-1-dev \
-    libpangomm-1.4-dev \
-    libjpeg-turbo-progs \
-    libfreetype6-dev \
+    git \
+    libsqlite3-dev \
+    libyaml-dev \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
-WORKDIR $APP_PATH
+FROM build_base AS dev
 
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Rebuild canvas module for the current architecture
-RUN npm rebuild canvas
-
-# Copy source code and config
-COPY src/ ./src/
-COPY config/ ./config/
-COPY tsconfig.json ./
-COPY nodemon.json ./
-
-# Build the application
-RUN npm run build
-
-# Frontend builder stage
-FROM node:24.16.0-slim AS frontend-builder
-
-ENV FRONTEND_PATH=/frontend
-
-# Create frontend directory
-WORKDIR $FRONTEND_PATH
-
-# Copy frontend package files
-COPY generator/package*.json ./
-
-# Install frontend dependencies
-RUN npm install
-
-# Copy frontend source and config
-COPY generator/src/ ./src/
-COPY generator/public/ ./public/
-COPY generator/types/ ./types/
-COPY generator/index.html ./
-COPY generator/vite.config.ts ./
-COPY generator/tsconfig.json ./
-COPY generator/eslint.config.js ./
-COPY config/ ./../config/
-
-# Build the frontend
-RUN npm run build
-
-# Production stage
-FROM node:24.16.0-slim AS production
-
-ENV APP_PATH=/app
-ENV NODE_ENV=production
-
-# Install runtime dependencies for canvas
-RUN apt-get update && apt-get install -y \
-    libcairo2 \
-    libjpeg62-turbo \
-    libpango-1.0-0 \
-    libgif7 \
-    libpixman-1-0 \
-    libpangomm-1.4-1v5 \
-    libfreetype6 \
+# Chromium runs the system specs.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    chromium \
     && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
-WORKDIR $APP_PATH
+ENV RAILS_ENV=development
 
-# Copy package files
-COPY package*.json ./
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 4 --retry 3
 
-# Install only production dependencies
-RUN npm ci --only=production
+COPY --chmod=755 ./entrypoints/development.sh /usr/local/bin/development.sh
 
-# Rebuild canvas module for the current architecture
-RUN npm rebuild canvas
+EXPOSE $RAILS_PORT
 
-# Copy built application from builder stage
-COPY --from=builder /app/dist ./dist
+ENTRYPOINT ["development.sh"]
+CMD ["puma", "-C", "config/puma.rb"]
 
-# Copy built frontend from frontend-builder stage
-COPY --from=frontend-builder /frontend/dist ./public
+FROM build_base AS builder
 
-# Create assets directory structure (for CI where assets might not exist)
-RUN mkdir -p assets/emotes/cache
+ENV BUNDLE_WITHOUT=development:test \
+    BUNDLE_DEPLOYMENT=1 \
+    BUNDLE_FROZEN=1 \
+    RAILS_ENV=production
 
-# Expose port
-EXPOSE 4000
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --jobs 4 --retry 3 && \
+    bundle clean --force && \
+    rm -rf /usr/local/bundle/cache/*.gem
 
-# Start the production server
-CMD ["npm", "start"]
+COPY . .
+
+RUN SECRET_KEY_BASE_DUMMY=1 bundle exec rails assets:precompile
+
+FROM base AS runtime
+
+ENV BUNDLE_WITHOUT=development:test \
+    BUNDLE_DEPLOYMENT=1 \
+    BUNDLE_FROZEN=1 \
+    RAILS_ENV=production \
+    BOOTSNAP_CACHE_DIR=/tmp/bootsnap \
+    MALLOC_ARENA_MAX=2
+
+RUN groupadd --gid 1000 rails && \
+    useradd --uid 1000 --gid rails --create-home --shell /bin/bash rails
+
+COPY --from=builder /usr/local/bundle /usr/local/bundle
+COPY --from=builder --chown=rails:rails $APP_PATH $APP_PATH
+
+COPY --chmod=755 ./entrypoints/prod.sh /usr/local/bin/prod.sh
+
+USER rails
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:$RAILS_PORT/up || exit 1
+
+EXPOSE $RAILS_PORT
+
+ENTRYPOINT ["prod.sh"]
+CMD ["puma", "-C", "config/puma.rb"]
