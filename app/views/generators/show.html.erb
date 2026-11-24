@@ -16,27 +16,32 @@
         </section>
 
         <section class="bb-card bb-card--panel min-w-0 md:order-1" aria-label="Options">
-          <div data-controller="search" class="mb-6">
-            <h2 class="bb-section-heading--sm">Character</h2>
-            <input type="search" class="bb-input mb-3" placeholder="Search characters" aria-label="Search characters"
-                   autocomplete="off" data-search-target="query" data-action="search#filter">
-            <div class="flex flex-wrap gap-2 max-h-40 overflow-y-auto">
-              <% @characters.each do |character| %>
-                <%= link_to character.capitalize, root_path(character:), data: { search_target: "item" },
-                            aria: { current: ("true" if character == @character) },
-                            class: class_names("bb-btn-sm", character == @character ? "bb-btn-primary" : "bb-btn-outline") %>
-              <% end %>
+          <div class="relative mb-6" data-controller="dropdown" data-action="click@document->dropdown#closeOutside">
+            <label for="character" class="bb-label">Character</label>
+            <input id="character" type="text" class="bb-input pr-9 cursor-pointer" value="<%= @character.capitalize %>" autocomplete="off" spellcheck="false"
+                   role="combobox" aria-expanded="false" aria-controls="characters" aria-autocomplete="list"
+                   data-dropdown-target="input"
+                   data-action="click->dropdown#open input->dropdown#filter keydown->dropdown#key blur->dropdown#leave">
+            <span class="absolute right-3 bottom-2 pointer-events-none bb-subtitle" aria-hidden="true">&#9662;</span>
+            <div class="absolute z-10 inset-x-0 mt-1 bb-card max-h-72 overflow-y-auto" hidden data-dropdown-target="menu">
+              <div id="characters" role="listbox" aria-label="Characters">
+                <% @characters.each do |character| %>
+                  <%= link_to character.capitalize, root_path(character:), id: "character_#{character}", role: "option", tabindex: -1,
+                              aria: { selected: character == @character }, data: { dropdown_target: "option" },
+                              class: "block px-3 py-2 hover:bg-neutral-200 aria-selected:font-bold data-active:bg-neutral-200" %>
+                <% end %>
+              </div>
+              <p class="bb-subtitle px-3 py-2" hidden data-dropdown-target="none">No characters match</p>
             </div>
-            <p class="bb-subtitle" hidden data-search-target="none">No characters match</p>
           </div>
 
           <% @parts.each do |kind, names| %>
-            <fieldset class="mb-5">
+            <fieldset class="relative mb-5">
               <legend class="bb-subheading-sm"><%= kind.capitalize %></legend>
-              <div class="flex flex-wrap gap-x-4 gap-y-2">
+              <div class="flex flex-wrap gap-2">
                 <% names.each do |name| %>
-                  <label class="inline-flex items-center gap-2">
-                    <%= radio_button_tag kind, name, @chosen&.fetch(kind) == name, autocomplete: "off",
+                  <label class="bb-btn-sm bb-btn-outline has-checked:bg-brand-600 has-checked:text-white has-focus-visible:ring-2 has-focus-visible:ring-brand-500">
+                    <%= radio_button_tag kind, name, @chosen[kind] == name, autocomplete: "off", class: "sr-only",
                                          data: { generator_target: "part", action: "generator#draw" } %>
                     <%= name %>
                   </label>

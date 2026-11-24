@@ -6,8 +6,16 @@ RSpec.describe "Generator" do
   def preview = find("img[alt='Emote']")
   def query = Rack::Utils.parse_query(URI(preview[:src]).query)
 
+  def choose_character(name)
+    find_field("Character").click
+    find("[role=option]", text: name).click
+    expect(page).to have_field("Character", with: name)
+  end
+
   def choose_all(**)
-    emote_query(**).except(:character).each { |kind, name| within_fieldset(kind.to_s.capitalize) { choose name } }
+    emote_query(**).except(:character).each do |kind, name|
+      within_fieldset(kind.to_s.capitalize) { find("label", text: name, exact_text: true).click }
+    end
   end
 
   it "shows a complete random emote at first" do
@@ -19,7 +27,7 @@ RSpec.describe "Generator" do
       image.decode().then(() => arguments[0](image.naturalWidth), () => arguments[0]("broken"))
     JS
     expect(page).to have_css("input[type=radio]:checked", count: 4, visible: :all)
-    expect(page).to have_link(query["character"].capitalize, class: "bb-btn-primary")
+    expect(page).to have_field("Character", with: query["character"].capitalize)
     visit(query.then { |q| "/emote?#{Rack::Utils.build_query(q)}" })
     expect(page.status_code).to eq(200)
   end
@@ -30,39 +38,72 @@ RSpec.describe "Generator" do
     expect(seen.uniq.size).to be > 1
   end
 
-  it "clears the emote for a new character until every part is chosen" do
+  it "chooses random parts for a new character" do
     draw_part("ben_mouth_grin.png")
     visit "/?character=ada"
-    expect(page).to have_no_css("img[alt='Emote']")
-    expect(page).to have_button("Copy URL", disabled: true)
-    click_link "Ben"
-    expect(page).to have_field("grin", type: :radio)
-    expect(page).to have_text("No emote selected")
+    choose_character "Ben"
 
-    choose_all
-    expect(query).to eq(emote_query(character: "ben").stringify_keys)
+    expect(page).to have_field("grin", type: :radio, visible: :all)
+    expect(page).to have_css("input[type=radio]:checked", count: 4, visible: :all)
+    expect(query).to include("character" => "ben")
     expect(page).to have_button("Copy URL", disabled: false)
-    click_link "Ada"
-    expect(page).to have_no_field("grin", type: :radio)
-    expect(page).to have_no_css("img[alt='Emote']")
+  end
+
+  it "does not always choose the same parts for a character" do
+    seen = Array.new(12) { visit("/?character=ada").then { query } }
+
+    expect(seen.uniq.size).to be > 1
+  end
+
+  it "shows no emote for a character without every part" do
+    draw_part("cy_head_normal.png")
+    visit "/?character=cy"
+
+    expect(page).to have_text("No emote selected")
+    expect(page).to have_button("Copy URL", disabled: true)
   end
 
   it "changes the preview with a part" do
     visit "/?character=ada"
     choose_all
-    within_fieldset("Eyes") { choose "xd" }
+    within_fieldset("Eyes") { find("label", text: "xd").click }
 
     expect(query["eyes"]).to eq("xd")
   end
 
-  it "finds characters" do
-    visit "/"
-    fill_in "Search characters", with: "BE"
+  it "has a dropdown of characters, which is closed until it is used" do
+    visit "/?character=ada"
+    expect(page).to have_no_css("[role=option]")
+    field = find_field("Character")
+    field.click
+    expect(all("[role=option]").map(&:text)).to eq(%w[Ada Ben])
 
-    expect(page).to have_link("Ben")
-    expect(page).to have_no_link("Ada")
-    fill_in "Search characters", with: "zz"
+    find("h2", text: "Preview").click
+    expect(page).to have_no_css("[role=option]")
+    expect(field.value).to eq("Ada")
+  end
+
+  it "filters the dropdown" do
+    visit "/?character=ada"
+    fill_in "Character", with: "BE"
+    expect(all("[role=option]").map(&:text)).to eq(["Ben"])
+    fill_in "Character", with: "zz"
     expect(page).to have_text("No characters match")
+    find_field("Character").send_keys(:escape)
+
+    expect(page).to have_field("Character", with: "Ada")
+  end
+
+  it "can be used with the keyboard" do
+    visit "/?character=ada"
+    find_field("Character").click
+    find_field("Character").send_keys(:down, :down, :up, :enter)
+    expect(page).to have_field("Character", with: "Ada")
+    fill_in "Character", with: "be"
+    find_field("Character").send_keys(:enter)
+
+    expect(page).to have_field("Character", with: "Ben")
+    expect(query).to include("character" => "ben")
   end
 
   it "copies the whole address" do
@@ -82,7 +123,7 @@ RSpec.describe "Generator" do
       window.violations = []
       addEventListener("securitypolicyviolation", (event) => violations.push(event.violatedDirective))
     JS
-    click_link "Ben"
+    choose_character "Ben"
     choose_all
 
     expect(preview).to be_visible
