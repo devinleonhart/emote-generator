@@ -8,11 +8,11 @@ AllCops:
   TargetRubyVersion: 4.0
   NewCops: enable
   Exclude:
-    - "**/node_modules/**/*"
     - "bin/**/*"
     - "config/**/*"
     - "config.ru"
     - "db/schema.rb"
+    - "**/node_modules/**/*"
     - "vendor/**/*"
     - "tmp/**/*"
 
@@ -118,6 +118,9 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 5
 
@@ -134,6 +137,3 @@ RSpec/Output:
 
 RSpecRails/InferredSpecType:
   Enabled: false
-
-# ─────────────────────────────────────────────────────────────
-# ─────────────────────────────────────────────────────────────
